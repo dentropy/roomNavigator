@@ -1,0 +1,1 @@
+{"room_four": {"right": "main"}, "room_two": {"left": "main"}, "north pole": {"south": "room_one"}, "room_one": {"down": "main", "north": "north pole"}, "main": {"down": "room_three", "right": "room_two", "up": "room_one", "left": "room_four"}, "room_three": {"up": "main"}}

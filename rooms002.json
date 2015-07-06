@@ -1,0 +1,20 @@
+{
+    "main": {
+        "up": "room_one",
+        "right": "room_two",
+        "down": "room_three",
+        "left": "room_four"
+    },
+    "room_one": {
+        "down": "main"
+    },
+    "room_two": {
+        "left": "main"
+    },
+    "room_three": {
+        "up": "main"
+    },
+    "room_four": {
+        "right": "main"
+    }
+}
