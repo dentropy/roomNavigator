@@ -39,5 +39,6 @@
     "health": 10,
     "power_points": 10,
     "level": 0,
+	"current room":"main",
     "help": "Here is some help, \nwhere to go\ncheck for \nitems \npocket \nstats \nOK that's all you get"
 }

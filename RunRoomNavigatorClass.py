@@ -1,7 +1,34 @@
 class RunRoomNavigator:
-    def __init__(self, game_data, current_room):
+    def __init__(self):
         print "type 'what' for help" 
-    def run(self, game_data, current_room):
+    def import_rooms(self):
+        import json
+        import os.path
+        print "You want to import rooms"
+        print "if you want to go back to command select type n"
+        print "type the name of the json file that came with this game"
+        file_name = ""
+        while os.path.isfile(file_name) == False:
+            input = raw_input('import file name:')
+            file_name = input +'.json'
+            if os.path.isfile(file_name) == True:
+                txt_file = open(file_name, 'r')
+                json_data = txt_file.read()
+                parsed_json = json.loads(json_data)
+                return parsed_json
+            print "FAILED TO IMPORT ROOM"
+    def save_the_data(self, game_data):
+        import json
+        import os.path
+        if game_data == []:
+            print "DID NOT IMPORT GAME DATA TYPE 'import'"
+            return
+        json_string = json.dumps(game_data)
+        name_of_file = raw_input("name the file you wish to save to:")
+        txt_file = open(name_of_file + ".json", 'w+')
+        txt_file.write(json_string)
+        txt_file.close()
+    def run(self, game_data):
         def check_for_items(items, current_room):
             print items[current_room]
         def where_to_go(rooms, current_room):
@@ -47,15 +74,20 @@ class RunRoomNavigator:
         items = game_data["items"] 
         text_input = ' '
         while text_input != 'exit':
+            print_what = True
             print "what would you like to do?"
             text_input = raw_input("-->")
             if text_input == "where to go":
-                current_room = where_to_go(rooms, current_room)
+                print_what = False
+                game_data["current room"] =  where_to_go(rooms, game_data["current room"])
             if text_input == "check for items":
-                check_for_items(items, current_room)  
+                print_what = False
+                check_for_items(items, game_data["current room"])  
             if text_input == "pocket":
-                items, player_items = pocket_item(items, current_room, player_items)
+                print_what = False
+                items, player_items = pocket_item(items, game_data["current room"], player_items)
             if text_input == "eat":
+                print_what = False
                 print "what do you want to eat?"
                 text_input = raw_input("-->")
                 for i in food:
@@ -65,9 +97,10 @@ class RunRoomNavigator:
                            health += food[i][0]
                            power_points +=  food[i][1]
                            display_stats(health, power_points, level) 
-                           del items[text_input]
+                           items[game_data["current room"]][text_input] -= 1
                 print "can't find that"
             if text_input == "items":
+                print_what = False
                 if player_items != {}:
                     print "here is a list of your items"
                     for i in player_items:
@@ -75,6 +108,9 @@ class RunRoomNavigator:
                 else:
                     print "nothing here"
             if text_input == "stats":
+                print_what = False
                 display_stats(health, power_points, level)
             if text_input == "what":
                 print game_data["help"]
+            if print_what == True:
+                print "did not catch that"
