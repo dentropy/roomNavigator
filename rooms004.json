@@ -1,1 +1,0 @@
-{"room_four": {"right": "main"}, "room_two": {"left": "main"}, "main": {"down": "room_three", "right": "room_two", "left": "room_four"}, "room_three": {"up": "main"}}
