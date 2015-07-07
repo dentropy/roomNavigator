@@ -20,9 +20,24 @@
         }
     },
     "items": {
-        "main": [
-            "pie",
-            "apples"
+        "main": {
+            "pie": 1,
+            "apples": 1
+        }
+    },
+    "food": {
+        "apple": [
+            2,
+            0
+        ],
+        "pie": [
+            1,
+            1
         ]
-    }
+    },
+    "player_items": {},
+    "health": 10,
+    "power_points": 10,
+    "level": 0,
+    "help": "Here is some help, \nwhere to go\ncheck for \nitems \npocket \nstats \nOK that's all you get"
 }

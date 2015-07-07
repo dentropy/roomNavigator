@@ -1,5 +1,6 @@
 game_data = []
 exit = False
+from RunRoomNavigatorClass import RunRoomNavigator
 print '''
 Welcome to room navigator
 In this program you can input or create a text file that contains a a list 
@@ -41,57 +42,6 @@ def import_rooms():
 #DONE CREATING THE ROOMS FROM A BACKUP FILE
 #RUNNING ROOMS
 #CHECK FOR ITEMS
-def check_for_items(items, current_room):
-    print items[current_room]
-def where_to_go(rooms, current_room):
-    print "You are in room %s" % current_room
-    print "Here is a list of the rooms you can go plus where they are"    
-    print "You can also type check for items"
-    for direciton , name in rooms[current_room].iteritems():
-        print  name + " is " + direciton
-    text_input = raw_input("where would you like to go:")
-    if text_input in rooms[current_room]:
-        current_room = rooms[current_room][text_input]
-        print "you are now in", current_room
-        return current_room
-    else:
-        print "Whoops Where's that? \n *************************"
-def pocket_item(items, current_room, player_items):
-    print "Choose an item, if it exists"
-    item = raw_input("-->")
-    for i in items[current_room]:
-        if i == item:
-            if items[current_room][i] != 0:
-                for j in player_items:
-                    if j == item:
-                        player_items[item] = player_items[item]+1
-                else:
-                    player_items[item] = 1
-                print "you pocket one ", item, " you now have", player_items[item], "pie('s)"
-                items[current_room][item] = items[current_room][item]-1
-                return items, player_items
-    else:
-        print "can't seem to find that"
-def run_room(game_data, current_room):
-    player_items = {}
-    if game_data == []:
-        print "DID NOT IMPORT GAME DATA TYPE 'import'"
-        return
-    rooms = game_data["rooms"]
-    items = game_data["items"]
-    if rooms == []:#check if works
-        print "ERROR TRY IMPORTING A FILE"
-        return 
-    text_input = ' '
-    while text_input != 'exit':
-        print "where to go, or check for items, and pocket"
-        text_input = raw_input("-->")
-        if text_input == "where to go":
-            current_room = where_to_go(rooms, current_room)
-        if text_input == "check for items":
-            check_for_items(items, current_room)  
-        if text_input == "pocket":
-            items, player_items = pocket_item(items, current_room, player_items)
 # DONE RUNNING ROOMS
 # CREATING A NEW ROOM
 def print_room_list(game_data):
@@ -179,7 +129,8 @@ while exit != True:
         game_data = import_rooms()
         print_what = False
     if input == "run":
-        run_room(game_data,"main")
+        run_Room_Navigator = RunRoomNavigator(game_data,"main")
+        run_Room_Navigator.run(game_data,"main")
         print_what = False
     if input == 'help':
         print instructions_text
