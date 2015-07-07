@@ -9,12 +9,16 @@
         "down": "main"
     },
     "room_two": {
-        "left": "main"
+        "left": "main",
+		"right": "room_five"
     },
     "room_three": {
         "up": "main"
     },
     "room_four": {
         "right": "main"
-    }
+    },
+	"room_five": {
+		"left": "room_two"
+	}
 }
