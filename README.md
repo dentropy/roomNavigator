@@ -8,8 +8,11 @@ Things to do to make the game better
     - Death should be a thing
     - add more stuff to the JSON file to make the game more interesting
     - Different greeting statement in ever room
+    - teams
     - People to talk to
     - Levels and experience
     - to view it one could export an image
     - world can be reandomly created
     - create web front end
+    - compile in  Javascript
+    - make it MMO
