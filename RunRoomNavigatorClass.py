@@ -1,12 +1,11 @@
+import json
+import os.path
+import random
 class RunRoomNavigator:
-    def __init__(self):
-        print "type 'what' for help" 
+    #def __init__(self): 
+    #   fill
     def import_rooms(self):
-        import json
-        import os.path
-        print "You want to import rooms"
-        print "if you want to go back to command select type n"
-        print "type the name of the json file that came with this game"
+        print "You want to import rooms probably rooms"
         file_name = ""
         while os.path.isfile(file_name) == False:
             input = raw_input('import file name:')
@@ -18,8 +17,6 @@ class RunRoomNavigator:
                 return parsed_json
             print "FAILED TO IMPORT ROOM"
     def save_the_data(self, game_data):
-        import json
-        import os.path
         if game_data == []:
             print "DID NOT IMPORT GAME DATA TYPE 'import'"
             return
@@ -29,8 +26,12 @@ class RunRoomNavigator:
         txt_file.write(json_string)
         txt_file.close()
     def run(self, game_data):
-        def check_for_items(items, current_room):
-            print items[current_room]
+        print "type 'what' for help"
+        def check_for_items(game_data):
+             if game_data["current room"] in game_data["items"]:
+                print game_data["items"][game_data["current room"]]
+             else:
+                print "there is nothing in", game_data["current room"]
         def where_to_go(rooms, current_room):
             print "You are in room %s" % current_room
             print "Here is a list of the rooms you can go plus where they are"    
@@ -39,50 +40,92 @@ class RunRoomNavigator:
                 print  name + " is " + direciton
             text_input = raw_input("where would you like to go:")
             if text_input in rooms[current_room]:
+                past_room = current_room
                 current_room = rooms[current_room][text_input]
                 print "you are now in", current_room
-                return current_room
+                return current_room,past_room
             else:
                 print "Whoops Where's that? \n *************************"
         def pocket_item(items, current_room, player_items):
             print "Choose an item, if it exists"
             item = raw_input("-->")
-            for i in items[current_room]:
-                if i == item:
-                    if items[current_room][i] != 0:
-                        for j in player_items:
-                            if j == item:
-                                player_items[item] = player_items[item]+1
-                        else:
-                            player_items[item] = 1
-                        print "you pocket one ", item, " you now have", player_items[item], "pie('s)"
+            if item in items[current_room]:   
+                if items[current_room][item] != 0:
+                    if item in player_items:
+                        player_items[item] = player_items[item]+1
                         items[current_room][item] = items[current_room][item]-1
-                        return items, player_items
+                        print "you picked up an ", item
+                        print "you pocket one ", item, " you now have", player_items[item], item, "('s)"
+                    else:
+                        player_items[item] = 1   
+                        items[current_room][item] = items[current_room][item]-1 
+                        print "you pocket one ", item, " you now have", player_items[item], item, "('s)" 
+                        print "you picked up an ", item  
+                print "can't seem to find that"
             else:
                 print "can't seem to find that"
+            return items, player_items
         def display_stats(health, power_points, level):
             print "level ",level, " health ", health, " and power points", power_points
+        def run_monster(game_data):
+            if game_data['current room'] in monsters:
+                power_points = game_data['power points']
+                print "There's a monster in the room"
+                print "do you want to fight it 'yes' or 'no'"
+                text_input = raw_input("-->")
+                if text_input == "no":
+                    game_data['current room'] = past_room
+                if text_input == "yes":
+                    monster_name = game_data["monsters"][game_data['current room']][0]
+                    print "time to fight ", monster_name
+                    monster_health = random.randint(monsters[game_data['current room']][1][0],monsters[game_data['current room']][1][1])
+                    while monster_health > 0:
+                        print "here are your attacks"
+                        for i in attacks:
+                            print i
+                        text_input =  raw_input("choose attack: ")
+                        if text_input in attacks:
+                            damage_to_monster = random.randint(attacks[text_input][0][0],attacks[text_input][0][1])
+                            power_points -= attacks[text_input][1]
+                            monster_health -= damage_to_monster
+                            print "you did ", damage_to_monster, "damage to ", monster_name
+                        else:
+                            print "what attack?"
+                        health = game_data["health"]
+                        monster_damage = random.randint(monsters[game_data['current room']][1][0],monsters[game_data['current room']][1][1])
+                        health -= monster_damage
+                        print "monster did ", monster_damage, " to you"
+                        display_stats(health, power_points, level)
+                    current_room = game_data["current room"]
+                    del game_data["monsters"][current_room]
+                    print "YOU WIN THE MONSTER IS DEAD"
+            return game_data
         if game_data == []:
             print "DID NOT IMPORT GAME DATA TYPE 'import'"
             return
-        player_items = game_data["player_items"]
+        player_items = game_data["player items"]
         health = game_data["health"]
-        power_points = game_data["power_points"]
+        power_points = game_data["power points"]
         level = game_data["level"]
         food = game_data["food"]
         rooms = game_data["rooms"]
         items = game_data["items"] 
+        monsters = game_data["monsters"]
+        past_room = ""
+        attacks = game_data["attacks"]
         text_input = ' '
         while text_input != 'exit':
             print_what = True
-            print "what would you like to do?"
+            game_data = run_monster(game_data)
+            print "what would you like to do? Or type what."
             text_input = raw_input("-->")
-            if text_input == "where to go":
+                
+            if text_input == "go":
                 print_what = False
-                game_data["current room"] =  where_to_go(rooms, game_data["current room"])
+                game_data["current room"],game_data["past room"] =  where_to_go(rooms, game_data["current room"])
             if text_input == "check for items":
-                print_what = False
-                check_for_items(items, game_data["current room"])  
+                check_for_items(game_data) 
+                print_what = False 
             if text_input == "pocket":
                 print_what = False
                 items, player_items = pocket_item(items, game_data["current room"], player_items)
@@ -99,14 +142,9 @@ class RunRoomNavigator:
                            display_stats(health, power_points, level) 
                            items[game_data["current room"]][text_input] -= 1
                 print "can't find that"
-            if text_input == "items":
+            if text_input == "items":   
+                check_for_items(game_data)
                 print_what = False
-                if player_items != {}:
-                    print "here is a list of your items"
-                    for i in player_items:
-                        print i
-                else:
-                    print "nothing here"
             if text_input == "stats":
                 print_what = False
                 display_stats(health, power_points, level)
@@ -114,3 +152,4 @@ class RunRoomNavigator:
                 print game_data["help"]
             if print_what == True:
                 print "did not catch that"
+        return game_data
