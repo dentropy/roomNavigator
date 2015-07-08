@@ -3,10 +3,13 @@ Run the python scripts runGame.py or runGodMode.py in IDLE or from CMD line to p
 
 The goal of this game is to create a RPG where you face colect items and defeat monsters and explore.
 Things to do to make the game better
-    1. save the current room in the JSON file
-    2. get all the god mode functions in a class
-    3. actually add monsters
-    4. add more stuff to the JSON file to make the game more interesting
-    5. to view it one could export an image
-    6. world can be reandomly created
-    7. create web front end
+    -check godMode
+    - get all the god mode functions in a class
+    - Death should be a thing
+    - add more stuff to the JSON file to make the game more interesting
+    - Different greeting statement in ever room
+    - People to talk to
+    - Levels and experience
+    - to view it one could export an image
+    - world can be reandomly created
+    - create web front end
