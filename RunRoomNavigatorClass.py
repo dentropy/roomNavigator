@@ -67,9 +67,11 @@ class RunRoomNavigator:
             return items, player_items
         def display_stats(health, power_points, level):
             print "level ",level, " health ", health, " and power points", power_points
+        def eat(game_data):
+            pass
         def run_monster(game_data):
-            if game_data['current room'] in monsters:
-                power_points = game_data['power points']
+        #[NAME],[Health],[Damage]
+            if game_data['current room'] in game_data["monsters"]:
                 print "There's a monster in the room"
                 print "do you want to fight it 'yes' or 'no'"
                 text_input = raw_input("-->")
@@ -78,7 +80,7 @@ class RunRoomNavigator:
                 if text_input == "yes":
                     monster_name = game_data["monsters"][game_data['current room']][0]
                     print "time to fight ", monster_name
-                    monster_health = random.randint(monsters[game_data['current room']][1][0],monsters[game_data['current room']][1][1])
+                    monster_health = random.randint(game_data["monsters"][game_data['current room']][1][0],game_data["monsters"][game_data['current room']][1][1])
                     while monster_health > 0:
                         print "here are your attacks"
                         for i in attacks:
@@ -86,31 +88,24 @@ class RunRoomNavigator:
                         text_input =  raw_input("choose attack: ")
                         if text_input in attacks:
                             damage_to_monster = random.randint(attacks[text_input][0][0],attacks[text_input][0][1])
-                            power_points -= attacks[text_input][1]
+                            game_data['power points'] -= attacks[text_input][1]
                             monster_health -= damage_to_monster
                             print "you did ", damage_to_monster, "damage to ", monster_name
                         else:
                             print "what attack?"
-                        health = game_data["health"]
-                        monster_damage = random.randint(monsters[game_data['current room']][1][0],monsters[game_data['current room']][1][1])
-                        health -= monster_damage
+                        monster_damage = random.randint(game_data["monsters"][game_data['current room']][1][0],\
+                            game_data["monsters"][game_data['current room']][1][1])
+                        game_data["health"] -= monster_damage
                         print "monster did ", monster_damage, " to you"
-                        display_stats(health, power_points, level)
+                        display_stats(game_data["health"], game_data['power points'], game_data["level"])
                     current_room = game_data["current room"]
                     del game_data["monsters"][current_room]
-                    print "YOU WIN THE MONSTER IS DEAD"
+                    print "THE MONSTER ID DEAD"
             return game_data
         if game_data == []:
             print "DID NOT IMPORT GAME DATA TYPE 'import'"
             return
-        player_items = game_data["player items"]
-        health = game_data["health"]
-        power_points = game_data["power points"]
-        level = game_data["level"]
         food = game_data["food"]
-        rooms = game_data["rooms"]
-        items = game_data["items"] 
-        monsters = game_data["monsters"]
         past_room = ""
         attacks = game_data["attacks"]
         text_input = ' '
@@ -122,24 +117,24 @@ class RunRoomNavigator:
                 
             if text_input == "go":
                 print_what = False
-                game_data["current room"],game_data["past room"] =  where_to_go(rooms, game_data["current room"])
+                game_data["current room"],game_data["past room"] =  where_to_go(game_data["rooms"], game_data["current room"])
             if text_input == "check for items":
                 check_for_items(game_data) 
                 print_what = False 
             if text_input == "pocket":
                 print_what = False
-                items, player_items = pocket_item(items, game_data["current room"], player_items)
+                game_data["items"] , game_data["player items"] = pocket_item(game_data["items"] , game_data["current room"], game_data["player items"])
             if text_input == "eat":
                 print_what = False
                 print "what do you want to eat?"
                 text_input = raw_input("-->")
                 for i in food:
-                    for j in player_items:
+                    for j in game_data["player items"]:
                         if i == j == text_input:
                            print "you eat one", text_input 
-                           health += food[i][0]
+                           game_data["health"] += food[i][0]
                            power_points +=  food[i][1]
-                           display_stats(health, power_points, level) 
+                           display_stats(game_data["health"], power_points, game_data["level"]) 
                            items[game_data["current room"]][text_input] -= 1
                 print "can't find that"
             if text_input == "items":   
@@ -147,7 +142,7 @@ class RunRoomNavigator:
                 print_what = False
             if text_input == "stats":
                 print_what = False
-                display_stats(health, power_points, level)
+                display_stats(game_data["health"], game_data["power points"], game_data["level"])
             if text_input == "what":
                 print game_data["help"]
             if print_what == True:
