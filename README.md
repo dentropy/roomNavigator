@@ -3,7 +3,7 @@ Run the python scripts runGame.py or runGodMode.py in IDLE or from CMD line to p
 
 The goal of this game is to create a RPG where you face colect items and defeat monsters and explore.
 Things to do to make the game better
-    - add more god mode functions
+    - add more god mode functions<br>
     - get all the run functions in a class
     - add more stuff to the JSON file to make the game more interesting
     - Different greeting statement in ever room
