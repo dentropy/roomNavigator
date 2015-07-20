@@ -13,7 +13,7 @@ run - remember to import run the room simulation /exit is too exit
 create room - run through the instructions in order to create a new room
 help - print the instructions you are reading
 list all rooms - lists the names of all the rooms
-print room list - prints the data structure
+print game data - prints the data structure
 save the data - saves the current data structure into a text document
 delete room - delete room and connections to it
 ''' 
@@ -36,10 +36,11 @@ while exit != True:
         game_data = god_mode_functions.create_room(game_data["rooms"])
         print_what = False
     if input == "list all rooms":
-        god_mode_functions.list_all_rooms(game_data["rooms"])
+        for i in game_data["rooms"]:
+            print i
         print_what = False
-    if input == "print room list":
-        god_mode_functions.print_room_list(game_data["rooms"])
+    if input == "print game data":
+        print game_data["rooms"]
         print_what = False
     if input == "save the data":
         run_Room_Navigator = RunRoomNavigator()

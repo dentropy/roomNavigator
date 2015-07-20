@@ -17,10 +17,7 @@ connection one can navigate to that room
 		if game_data == []:
 			print "DID NOT IMPORT GAME DATA TYPE 'import'"
 			return
-		game_data = game_data["rooms"]
-		print "printing rooms"
-		for i in range(len(rooms)):
-			print rooms[i][0]
+		print game_data["rooms"]
 	def create_room(self, game_data):
 		if game_data == []:
 			print "DID NOT IMPORT GAME DATA TYPE 'import'"

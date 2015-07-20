@@ -2,8 +2,6 @@ import json
 import os.path
 import random
 class RunRoomNavigator:
-    #def __init__(self): 
-    #   fill
     def import_rooms(self):
         print "You want to import rooms probably rooms"
         file_name = ""
@@ -32,20 +30,22 @@ class RunRoomNavigator:
                 print game_data["items"][game_data["current room"]]
              else:
                 print "there is nothing in", game_data["current room"]
-        def where_to_go(rooms, current_room):
-            print "You are in room %s" % current_room
+        def where_to_go(game_data):
+            current_room = game_data["current room"]
+            print "You are in room %s" % game_data["current room"]
             print "Here is a list of the rooms you can go plus where they are"    
             print "You can also type check for items"
-            for direciton , name in rooms[current_room].iteritems():
-                print  name + " is " + direciton
+            for direciton , name in game_data["rooms"][current_room].iteritems():
+                print name, " is ", direciton
             text_input = raw_input("where would you like to go:")
-            if text_input in rooms[current_room]:
+            if text_input in game_data["rooms"][current_room]:
                 past_room = current_room
-                current_room = rooms[current_room][text_input]
+                current_room = game_data["rooms"][current_room][text_input]
                 print "you are now in", current_room
                 return current_room,past_room
             else:
                 print "Whoops Where's that? \n *************************"
+                return game_data["current room"], game_data["past room"]
         def pocket_item(items, current_room, player_items):
             print "Choose an item, if it exists"
             item = raw_input("-->")
@@ -61,7 +61,6 @@ class RunRoomNavigator:
                         items[current_room][item] = items[current_room][item]-1 
                         print "you pocket one ", item, " you now have", player_items[item], item, "('s)" 
                         print "you picked up an ", item  
-                print "can't seem to find that"
             else:
                 print "can't seem to find that"
             return items, player_items
@@ -114,10 +113,9 @@ class RunRoomNavigator:
             game_data = run_monster(game_data)
             print "what would you like to do? Or type what."
             text_input = raw_input("-->")
-                
             if text_input == "go":
                 print_what = False
-                game_data["current room"],game_data["past room"] =  where_to_go(game_data["rooms"], game_data["current room"])
+                game_data["current room"], game_data["past room"] =  where_to_go(game_data)
             if text_input == "check for items":
                 check_for_items(game_data) 
                 print_what = False 

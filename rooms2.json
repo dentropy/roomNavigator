@@ -1,0 +1,67 @@
+{
+    "rooms": {
+        "The Great Hall": {
+            "up": "Attic",
+            "right": "The Room of Requirement",
+            "down": "Dungeon",
+            "left": "OuTsIdE"
+        },
+        "Attic": {
+            "down": "The Great Hall"
+        },
+        "The Room of Requirement": {
+            "left": "The Great Hall"
+        },
+        "Dungeon": {
+            "up": "The Great Hall"
+        },
+        "OuTsIdE": {
+            "right": "The Great Hall"
+        }
+    },
+    "items": {
+        "The Great Hall": {
+            "pie": 1,
+            "apples": 1
+        }
+    },
+    "food": {
+        "apple": [
+            2,
+            0
+        ],
+        "pie": [
+            1,
+            1
+        ]
+    },
+    "monsters": {
+        "Dungeon": [
+            "Moldpest",
+            [
+                1,
+                4
+            ],
+            [
+                1,
+                2
+            ]
+        ]
+    },
+    "attacks": {
+        "basic": [
+            [
+                1,
+                2
+            ],
+            1
+        ]
+    },
+    "player items": {},
+    "health": 10,
+    "power points": 10,
+    "level": 0,
+    "current room": "The Great Hall",
+    "past room": "",
+    "help": "Here is some help, \ngo\ncheck for items \npocket \nstats \nOK that's all you get"
+}
