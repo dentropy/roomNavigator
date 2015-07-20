@@ -1,21 +1,25 @@
 {
     "rooms": {
         "main": {
-            "up": "room_one",
-            "right": "room_two",
-            "down": "room_three",
-            "left": "room_four"
+            "up": "Jackrabbit",
+            "right": "Diamondback",
+            "down": "Roadrunner ",
+            "left": "Cardinal"
         },
-        "room_one": {
-            "down": "main"
+        "Jackrabbit": {
+            "down": "main",
+            "up": "Gecko"
         },
-        "room_two": {
+        "Gecko": {
+            "down": "Jackrabbit"
+        },
+        "Diamondback": {
             "left": "main"
         },
-        "room_three": {
+        "Roadrunner": {
             "up": "main"
         },
-        "room_four": {
+        "Cardinal": {
             "right": "main"
         }
     },
