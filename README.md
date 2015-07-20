@@ -7,11 +7,12 @@ Things to do to make the game better<br>
     - get all the run functions in a class<br>
     - add more stuff to the JSON file to make the game more interesting<br>
     - Different greeting statement in ever room<br>
-    - teams<br>
     - People to talk to<br>
     - Levels and experience<br>
+    - Armour<br>
     - to view it one could export an image<br>
     - world can be reandomly created<br>
     - create web front end<br>
     - compile in  Javascript<br>
     - make it MMO<br>
+    - teams<br>
